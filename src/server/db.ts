@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-import { env } from "chakra-ui/env.mjs";
+import { env } from "flight-plan/env.mjs";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 

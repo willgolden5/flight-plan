@@ -1,5 +1,5 @@
-import { createTRPCRouter } from "chakra-ui/server/api/trpc";
-import { exampleRouter } from "chakra-ui/server/api/routers/example";
+import { createTRPCRouter } from "flight-plan/server/api/trpc";
+import { exampleRouter } from "flight-plan/server/api/routers/example";
 
 /**
  * This is the primary router for your server.

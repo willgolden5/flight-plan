@@ -4,7 +4,7 @@ import {
   createTRPCRouter,
   publicProcedure,
   protectedProcedure,
-} from "chakra-ui/server/api/trpc";
+} from "flight-plan/server/api/trpc";
 
 export const exampleRouter = createTRPCRouter({
   hello: publicProcedure

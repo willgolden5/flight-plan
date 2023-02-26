@@ -17,8 +17,8 @@
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
 
-import { getServerAuthSession } from "chakra-ui/server/auth";
-import { prisma } from "chakra-ui/server/db";
+import { getServerAuthSession } from "flight-plan/server/auth";
+import { prisma } from "flight-plan/server/db";
 
 type CreateContextOptions = {
   session: Session | null;

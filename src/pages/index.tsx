@@ -1,16 +1,17 @@
 import styles from './index.module.css';
 import { type NextPage } from 'next';
-import Head from 'next/head';
-import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
-import { api } from 'chakra-ui/utils/api';
-import Layout from 'chakra-ui/components/Layout';
+import { api } from 'flight-plan/utils/api';
+import Layout from 'flight-plan/components/Layout';
+import { Flex } from '@chakra-ui/react';
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: 'from tRPC' });
-
-  return <Layout></Layout>;
+  return (
+    <Layout>
+      <Flex></Flex>
+    </Layout>
+  );
 };
 
 export default Home;
