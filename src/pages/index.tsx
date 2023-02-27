@@ -4,12 +4,18 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 
 import { api } from 'flight-plan/utils/api';
 import Layout from 'flight-plan/components/Layout';
-import { Flex } from '@chakra-ui/react';
+import { Flex, FormControl, FormLabel } from '@chakra-ui/react';
 
 const Home: NextPage = () => {
   return (
     <Layout>
-      <Flex></Flex>
+      <Flex backgroundColor='gray.200' w='375px' h='500px'>
+        <Flex>
+          <FormControl>
+            <FormLabel>Email</FormLabel>
+          </FormControl>
+        </Flex>
+      </Flex>
     </Layout>
   );
 };
