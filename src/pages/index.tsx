@@ -4,20 +4,21 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 
 import { api } from 'flight-plan/utils/api';
 import Layout from 'flight-plan/components/Layout';
-import { Flex, FormControl, FormLabel } from '@chakra-ui/react';
+import { Button, Flex, FormControl, FormLabel } from '@chakra-ui/react';
+import { useEffect } from 'react';
 
 const Home: NextPage = () => {
-  return (
-    <Layout>
-      <Flex backgroundColor='gray.200' w='375px' h='500px'>
-        <Flex>
-          <FormControl>
-            <FormLabel>Email</FormLabel>
-          </FormControl>
-        </Flex>
-      </Flex>
-    </Layout>
-  );
+
+    return (
+        <Layout>
+            <Flex  w='375px' h='500px' justify={"center"} align="center">
+                <Flex w="100%" h="full" justify="center" align="center">
+                    <Button colorScheme="cyan" w="33%" p={2}>Sign In</Button>
+                  <Button colorScheme="gray" w="33%" p={2}>Sign Up</Button>
+                </Flex>
+            </Flex>
+        </Layout>
+    );
 };
 
 export default Home;
@@ -30,15 +31,16 @@ const AuthShowcase: React.FC = () => {
     { enabled: sessionData?.user !== undefined }
   );
 
-  return (
-    <div className={styles.authContainer}>
-      <p className={styles.showcaseText}>
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
-      <button className={styles.loginButton} onClick={sessionData ? () => void signOut() : () => void signIn()}>
-        {sessionData ? 'Sign out' : 'Sign in'}
-      </button>
-    </div>
-  );
+
+    return (
+        <div className={styles.authContainer}>
+            <p className={styles.showcaseText}>
+                {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
+                {secretMessage && <span> - {secretMessage}</span>}
+            </p>
+            <button className={styles.loginButton} onClick={sessionData ? () => void signOut() : () => void signIn()}>
+                {sessionData ? 'Sign out' : 'Sign in'}
+            </button>
+        </div>
+    );
 };
