@@ -5,7 +5,6 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "flight-plan/server/api/trpc";
-import { getQuotes } from "flight-plan/server/getLicenseInfo";
 
 export const exampleRouter = createTRPCRouter({
   hello: publicProcedure
@@ -18,10 +17,6 @@ export const exampleRouter = createTRPCRouter({
 
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.example.findMany();
-  }),
-
-  getAirmenData: publicProcedure.query(({ ctx }) => {
-    return getQuotes();
   }),
 
   getSecretMessage: protectedProcedure.query(() => {
