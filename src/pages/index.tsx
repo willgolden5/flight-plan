@@ -3,20 +3,33 @@ import { type NextPage } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { api } from 'flight-plan/utils/api';
 import Layout from 'flight-plan/components/Layout';
-import { Button, Flex, Heading } from '@chakra-ui/react';
+import { Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { ArrowRightIcon, ArrowDownIcon } from '@chakra-ui/icons';
 import LottiePlane from 'flight-plan/components/LottiePlane';
 
 const Home: NextPage = () => {
+  const signIn = () => {
+    return <AuthShowcase />;
+  };
   return (
     <Layout>
       <Flex direction='column' w='375px' justify={'center'} align='center'>
         <Flex p={2} mb={2}>
-          <Heading>Flight Plan Pre-Alpha</Heading>
+          <Heading size='2xl' fontWeight='900'>
+            Flight Plan
+          </Heading>
         </Flex>
         <LottiePlane />
         <Flex w='100%' h='full' justify='center' align='center'>
-          <Button leftIcon={<ArrowDownIcon h={4} />} colorScheme='facebook' w='45%' m={2} px={5} py={2}>
+          <Button
+            leftIcon={<ArrowDownIcon h={4} />}
+            onClick={() => signIn()}
+            colorScheme='facebook'
+            w='45%'
+            m={2}
+            px={5}
+            py={2}
+          >
             Sign In
           </Button>
           <Button variant='outline' rightIcon={<ArrowRightIcon w={2} />} colorScheme='facebook' w='45%' m={2}>
