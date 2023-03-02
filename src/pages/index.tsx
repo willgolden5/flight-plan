@@ -4,17 +4,22 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 
 import { api } from 'flight-plan/utils/api';
 import Layout from 'flight-plan/components/Layout';
-import { Button, Flex, FormControl, FormLabel } from '@chakra-ui/react';
+import { Button, Flex, FormControl, FormLabel, Heading } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 const Home: NextPage = () => {
 
     return (
         <Layout>
-            <Flex  w='375px' h='500px' justify={"center"} align="center">
+            <Flex direction="column" w='375px' justify={"center"} align="center" >
+              <Flex p={2}>
+                <Heading>
+                  Flight Plan Pre-Alpha
+                </Heading>
+              </Flex>
                 <Flex w="100%" h="full" justify="center" align="center">
-                    <Button colorScheme="cyan" w="33%" p={2}>Sign In</Button>
-                  <Button colorScheme="gray" w="33%" p={2}>Sign Up</Button>
+                    <Button colorScheme="cyan" w="33%" m={2}>Sign In</Button>
+                  <Button colorScheme="gray" w="33%" m={2}>Sign Up</Button>
                 </Flex>
             </Flex>
         </Layout>
