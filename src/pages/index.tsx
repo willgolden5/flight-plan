@@ -1,10 +1,9 @@
 import styles from './index.module.css';
 import { type NextPage } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/react';
-
 import { api } from 'flight-plan/utils/api';
 import Layout from 'flight-plan/components/Layout';
-import { Button, Flex, Heading, MenuIcon } from '@chakra-ui/react';
+import { Button, Flex, Heading } from '@chakra-ui/react';
 import { ArrowRightIcon, ArrowDownIcon } from '@chakra-ui/icons';
 import LottiePlane from 'flight-plan/components/LottiePlane';
 
