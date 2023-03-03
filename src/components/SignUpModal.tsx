@@ -31,7 +31,7 @@ function SignUp({ dataAction }: SignUpProps) {
       <FormLabel>Email</FormLabel>
       <Input type='email' id='email' value={input.email} onChange={handleInputChange} />
       {!isError ? (
-        <FormHelperText>Enter the email you'd like to create your account with.</FormHelperText>
+        <FormHelperText>Enter the email you would like to create your account with.</FormHelperText>
       ) : (
         <FormErrorMessage>Email is required.</FormErrorMessage>
       )}
