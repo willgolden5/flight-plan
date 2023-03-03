@@ -1,8 +1,9 @@
 import { Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input } from '@chakra-ui/react';
 import { type ChangeEvent, useEffect, useState } from 'react';
+import useDebounce from 'flight-plan/hooks/useDebounce';
 
 type SignUpProps = {
-  dataAction: () => void;
+  dataAction: (email: string, first: string, last: string) => void;
 };
 
 function SignUp({ dataAction }: SignUpProps) {
@@ -12,10 +13,13 @@ function SignUp({ dataAction }: SignUpProps) {
     last: '',
   });
 
+  const debouncedAction = useDebounce(dataAction, 500);
+
   useEffect(() => {
     if (input.email !== '' && input.first !== '' && input.last !== '') {
-      dataAction();
+      void debouncedAction(input.email, input.first, input.last);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input, dataAction]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => setInput({ ...input, [e.target.id]: e.target.value });
@@ -27,7 +31,7 @@ function SignUp({ dataAction }: SignUpProps) {
       <FormLabel>Email</FormLabel>
       <Input type='email' id='email' value={input.email} onChange={handleInputChange} />
       {!isError ? (
-        <FormHelperText>Enter the email you'd like to receive the newsletter on.</FormHelperText>
+        <FormHelperText>Enter the email you'd like to create your account with.</FormHelperText>
       ) : (
         <FormErrorMessage>Email is required.</FormErrorMessage>
       )}

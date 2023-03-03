@@ -16,17 +16,56 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalFooter,
+  useToast,
 } from '@chakra-ui/react';
 import { ArrowRightIcon, ArrowDownIcon, CheckIcon } from '@chakra-ui/icons';
 import LottiePlane from 'flight-plan/components/LottiePlane';
-import { useRouter } from 'next/router';
 import SignUp from 'flight-plan/components/SignUpModal';
+import { useEffect, useState } from 'react';
+
+type AlphaData = {
+  data: { email: string; first: string; last: string };
+};
 
 const Home: NextPage = () => {
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const signIn = () => {
-    router.push;
+  const toast = useToast();
+  const [alphaData, setAlphaData] = useState<AlphaData>({
+    data: {
+      email: '',
+      first: '',
+      last: '',
+    },
+  } as AlphaData);
+  const query = api.alpha.alpha.useQuery({
+    email: alphaData.data.email,
+    first: alphaData.data.first,
+    last: alphaData.data.last,
+  });
+
+  const signIn = (email: string, first: string, last: string) =>
+    setAlphaData({ data: { email, first, last } } as AlphaData);
+
+  const submit = () => {
+    if (query.error) {
+      toast({
+        title: 'Error',
+        description: 'There was an error submitting your information. Please try again.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom',
+      });
+    } else {
+      toast({
+        title: 'Success',
+        description: 'You have successfully signed up for Flight Plan Alpha!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom',
+      });
+    }
   };
   return (
     <Layout>
@@ -63,7 +102,17 @@ const Home: NextPage = () => {
                 <SignUp dataAction={signIn} />
               </Flex>
               <ModalFooter w='100%'>
-                <Button leftIcon={<CheckIcon h={4} />} colorScheme='facebook' w='100%' mr={2} px={5}>
+                <Button
+                  onClick={() => {
+                    submit();
+                    onClose();
+                  }}
+                  leftIcon={<CheckIcon h={4} />}
+                  colorScheme='facebook'
+                  w='100%'
+                  mr={2}
+                  px={5}
+                >
                   Submit
                 </Button>
               </ModalFooter>
