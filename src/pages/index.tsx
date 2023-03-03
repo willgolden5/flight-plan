@@ -77,18 +77,18 @@ const Home: NextPage = () => {
         </Flex>
         <LottiePlane />
         <Flex w='100%' h='full' justify='center' align='center'>
-          <Button leftIcon={<ArrowDownIcon h={4} />} colorScheme='facebook' w='45%' m={2} px={5} py={2}>
+          {/* <Button leftIcon={<ArrowDownIcon h={4} />} colorScheme='facebook' w='45%' m={2} px={5} py={2}>
             Sign In
-          </Button>
+          </Button> */}
           <Button
             onClick={onOpen}
-            variant='outline'
+            // variant='outline'
             rightIcon={<ArrowRightIcon w={2} />}
             colorScheme='facebook'
-            w='45%'
+            w='100%'
             m={2}
           >
-            Sign Up
+            Join Waitlist
           </Button>
           <Modal onClose={onClose} isOpen={isOpen} isCentered>
             <ModalOverlay />
@@ -97,7 +97,7 @@ const Home: NextPage = () => {
                 Sign Up
               </ModalHeader>
               <ModalCloseButton />
-              <ModalBody>Leave your information below for access to the Flight Plan closed Alpha.</ModalBody>
+              <ModalBody>Leave your information below for access to the Flight Plan Closed Alpha.</ModalBody>
               <Flex p={4}>
                 <SignUp dataAction={signIn} />
               </Flex>
