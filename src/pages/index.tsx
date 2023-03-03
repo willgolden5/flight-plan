@@ -70,7 +70,7 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <Flex direction='column' w='375px' justify={'center'} align='center'>
-        <Flex p={2} mb={2}>
+        <Flex p={2} mb={2} direction='column'>
           <Heading size='2xl' fontWeight='900'>
             Flight Plan
           </Heading>
@@ -97,7 +97,9 @@ const Home: NextPage = () => {
                 Sign Up
               </ModalHeader>
               <ModalCloseButton />
-              <ModalBody>Leave your information below for access to the Flight Plan Closed Alpha.</ModalBody>
+              <ModalBody justifyContent='center'>
+                Leave your information below for access to the Flight Plan Closed Alpha.
+              </ModalBody>
               <Flex p={4}>
                 <SignUp dataAction={signIn} />
               </Flex>
