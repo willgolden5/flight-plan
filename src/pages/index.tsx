@@ -3,13 +3,30 @@ import { type NextPage } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { api } from 'flight-plan/utils/api';
 import Layout from 'flight-plan/components/Layout';
-import { Button, Flex, Heading, Text } from '@chakra-ui/react';
-import { ArrowRightIcon, ArrowDownIcon } from '@chakra-ui/icons';
+import {
+  Button,
+  Flex,
+  Heading,
+  Text,
+  Modal,
+  useDisclosure,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  ModalFooter,
+} from '@chakra-ui/react';
+import { ArrowRightIcon, ArrowDownIcon, CheckIcon } from '@chakra-ui/icons';
 import LottiePlane from 'flight-plan/components/LottiePlane';
+import { useRouter } from 'next/router';
+import SignUp from 'flight-plan/components/SignUpModal';
 
 const Home: NextPage = () => {
+  const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const signIn = () => {
-    return <AuthShowcase />;
+    router.push;
   };
   return (
     <Layout>
@@ -21,20 +38,37 @@ const Home: NextPage = () => {
         </Flex>
         <LottiePlane />
         <Flex w='100%' h='full' justify='center' align='center'>
+          <Button leftIcon={<ArrowDownIcon h={4} />} colorScheme='facebook' w='45%' m={2} px={5} py={2}>
+            Sign In
+          </Button>
           <Button
-            leftIcon={<ArrowDownIcon h={4} />}
-            onClick={() => signIn()}
+            onClick={onOpen}
+            variant='outline'
+            rightIcon={<ArrowRightIcon w={2} />}
             colorScheme='facebook'
             w='45%'
             m={2}
-            px={5}
-            py={2}
           >
-            Sign In
-          </Button>
-          <Button variant='outline' rightIcon={<ArrowRightIcon w={2} />} colorScheme='facebook' w='45%' m={2}>
             Sign Up
           </Button>
+          <Modal onClose={onClose} isOpen={isOpen} isCentered>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader fontSize='26px' fontWeight='800'>
+                Sign Up
+              </ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>Leave your information below for access to the Flight Plan closed Alpha.</ModalBody>
+              <Flex p={4}>
+                <SignUp dataAction={signIn} />
+              </Flex>
+              <ModalFooter w='100%'>
+                <Button leftIcon={<CheckIcon h={4} />} colorScheme='facebook' w='100%' mr={2} px={5}>
+                  Submit
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </Flex>
       </Flex>
     </Layout>
