@@ -59,7 +59,7 @@ const Home: NextPage = () => {
     } else {
       toast({
         title: 'Success',
-        description: 'You have successfully signed up for Flight Plan Alpha!',
+        description: 'You have successfully signed up for the Flight Plan Alpha!',
         status: 'success',
         duration: 5000,
         isClosable: true,
