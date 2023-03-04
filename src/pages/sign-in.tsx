@@ -1,9 +1,16 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Button, Flex, Heading, Input, Stack, Text } from '@chakra-ui/react';
 import Layout from 'flight-plan/components/Layout';
-import { NextPageContext } from 'next';
-import { BuiltInProviderType } from 'next-auth/providers';
-import { getProviders, getSession, getCsrfToken, LiteralUnion, ClientSafeProvider, signIn } from 'next-auth/react';
+import { type NextPageContext } from 'next';
+import { type BuiltInProviderType } from 'next-auth/providers';
+import {
+  getProviders,
+  getSession,
+  getCsrfToken,
+  type LiteralUnion,
+  type ClientSafeProvider,
+  signIn,
+} from 'next-auth/react';
 
 type SignInProps = {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
@@ -11,7 +18,6 @@ type SignInProps = {
 };
 
 const SignIn = ({ providers, csrfToken }: SignInProps) => {
-  console.log(providers, csrfToken);
   return (
     <Layout>
       <Flex align='center' justify='center'>
