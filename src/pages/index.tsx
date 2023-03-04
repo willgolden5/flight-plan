@@ -27,6 +27,9 @@ type AlphaData = {
 };
 
 const Home: NextPage = () => {
+  const { status } = useSession({
+    required: true,
+  });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const [alphaData, setAlphaData] = useState<AlphaData>({
@@ -66,6 +69,66 @@ const Home: NextPage = () => {
       });
     }
   };
+
+  if (status === 'loading') {
+    return (
+      <Layout>
+        <Flex direction='column' w='375px' justify={'center'} align='center'>
+          <Flex p={2} mb={2} direction='column'>
+            <Heading size='2xl' fontWeight='900'>
+              Flight Plan
+            </Heading>
+          </Flex>
+          <LottiePlane />
+          <Flex w='100%' h='full' justify='center' align='center'>
+            {/* <Button leftIcon={<ArrowDownIcon h={4} />} colorScheme='facebook' w='45%' m={2} px={5} py={2}>
+              Sign In
+            </Button> */}
+            <Button
+              onClick={onOpen}
+              // variant='outline'
+              rightIcon={<ArrowRightIcon w={2} />}
+              colorScheme='facebook'
+              w='100%'
+              m={2}
+            >
+              Join Waitlist
+            </Button>
+            <Modal onClose={onClose} isOpen={isOpen} isCentered>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader fontSize='26px' fontWeight='800'>
+                  Sign Up
+                </ModalHeader>
+                <ModalCloseButton />
+                <ModalBody justifyContent='center'>
+                  Leave your information below for access to the Flight Plan Closed Alpha.
+                </ModalBody>
+                <Flex p={4}>
+                  <SignUp dataAction={signIn} />
+                </Flex>
+                <ModalFooter w='100%'>
+                  <Button
+                    onClick={() => {
+                      submit();
+                      onClose();
+                    }}
+                    leftIcon={<CheckIcon h={4} />}
+                    colorScheme='facebook'
+                    w='100%'
+                    mr={2}
+                    px={5}
+                  >
+                    Submit
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          </Flex>
+        </Flex>
+      </Layout>
+    );
+  }
   return (
     <Layout>
       <Flex direction='column' w='375px' justify={'center'} align='center'>
@@ -73,52 +136,6 @@ const Home: NextPage = () => {
           <Heading size='2xl' fontWeight='900'>
             Flight Plan
           </Heading>
-        </Flex>
-        <LottiePlane />
-        <Flex w='100%' h='full' justify='center' align='center'>
-          {/* <Button leftIcon={<ArrowDownIcon h={4} />} colorScheme='facebook' w='45%' m={2} px={5} py={2}>
-            Sign In
-          </Button> */}
-          <Button
-            onClick={onOpen}
-            // variant='outline'
-            rightIcon={<ArrowRightIcon w={2} />}
-            colorScheme='facebook'
-            w='100%'
-            m={2}
-          >
-            Join Waitlist
-          </Button>
-          <Modal onClose={onClose} isOpen={isOpen} isCentered>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader fontSize='26px' fontWeight='800'>
-                Sign Up
-              </ModalHeader>
-              <ModalCloseButton />
-              <ModalBody justifyContent='center'>
-                Leave your information below for access to the Flight Plan Closed Alpha.
-              </ModalBody>
-              <Flex p={4}>
-                <SignUp dataAction={signIn} />
-              </Flex>
-              <ModalFooter w='100%'>
-                <Button
-                  onClick={() => {
-                    submit();
-                    onClose();
-                  }}
-                  leftIcon={<CheckIcon h={4} />}
-                  colorScheme='facebook'
-                  w='100%'
-                  mr={2}
-                  px={5}
-                >
-                  Submit
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
         </Flex>
       </Flex>
     </Layout>
