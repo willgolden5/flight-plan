@@ -7,7 +7,6 @@ import {
   Button,
   Flex,
   Heading,
-  Text,
   Modal,
   useDisclosure,
   ModalOverlay,
@@ -18,10 +17,10 @@ import {
   ModalFooter,
   useToast,
 } from '@chakra-ui/react';
-import { ArrowRightIcon, ArrowDownIcon, CheckIcon } from '@chakra-ui/icons';
+import { ArrowRightIcon, CheckIcon } from '@chakra-ui/icons';
 import LottiePlane from 'flight-plan/components/LottiePlane';
 import SignUp from 'flight-plan/components/SignUpModal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type AlphaData = {
   data: { email: string; first: string; last: string };
