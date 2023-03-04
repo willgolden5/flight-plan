@@ -20,6 +20,17 @@ model Alpha {
   last  String
 }
 
+model Posts {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  content   String
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -54,6 +65,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Posts         Posts[]
 }
 
 model VerificationToken {
