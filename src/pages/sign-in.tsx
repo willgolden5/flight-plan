@@ -20,31 +20,48 @@ type SignInProps = {
 const SignIn = ({ providers, csrfToken }: SignInProps) => {
   return (
     <Layout>
-      <Flex align='center' justify='center'>
-        <Heading alignContent='center'>Sign In</Heading>
-        <form method='post' action='/api/auth/signin/email'>
-          <Input name='csrfToken' type='hidden' defaultValue={csrfToken} />
-          <label>
-            Email Address
-            <Input name='email' type='text' id='email' />
-          </label>
-          <Button type='submit'>Sign in</Button>
-        </form>
-      </Flex>
-      <Stack isInline margin='12'>
-        {Object.values(providers as Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider>).map(
-          (provider) => {
-            if (provider.name === 'Email') {
-              return null;
+      <Flex align='left' p={2} justify='center' direction='column' w='375px'>
+        <Heading mb={4} alignContent='center'>
+          Sign In
+        </Heading>
+        <Flex w='100%' h='100%'>
+          <form method='post' action='/api/auth/signin/email'>
+            <Input name='csrfToken' type='hidden' defaultValue={csrfToken} />
+            <label>
+              Email Address
+              <Input name='email' type='text' id='email' />
+            </label>
+            <label>
+              Password
+              <Input name='email' type='text' id='email' />
+            </label>
+            <Button my={4} colorScheme='facebook' type='submit' w='100%'>
+              Sign in
+            </Button>
+          </form>
+        </Flex>
+        <Stack isInline p={4}>
+          {Object.values(providers as Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider>).map(
+            (provider) => {
+              if (provider.name === 'Email') {
+                return null;
+              }
+              return (
+                <Flex key={provider.name}>
+                  <Button
+                    variant='outline'
+                    borderColor='blackAlpha.900'
+                    color='facebook'
+                    onClick={() => signIn(provider.id)}
+                  >
+                    Sign in with {provider.name}
+                  </Button>
+                </Flex>
+              );
             }
-            return (
-              <Flex key={provider.name}>
-                <Button onClick={() => signIn(provider.id)}>Sign in with {provider.name}</Button>
-              </Flex>
-            );
-          }
-        )}
-      </Stack>
+          )}
+        </Stack>
+      </Flex>
     </Layout>
   );
 };
