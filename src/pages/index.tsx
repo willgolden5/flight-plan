@@ -20,7 +20,7 @@ import { ArrowRightIcon, CheckIcon } from '@chakra-ui/icons';
 import LottiePlane from 'flight-plan/components/LottiePlane';
 import SignUp from 'flight-plan/components/SignUpModal';
 import { useState } from 'react';
-import PostFeed from 'flight-plan/components/postFeed';
+import PostViewer from 'flight-plan/components/PostViewer';
 
 type AlphaData = {
   data: { email: string; first: string; last: string };
@@ -42,6 +42,7 @@ const Home: NextPage = () => {
       last: '',
     },
   } as AlphaData);
+
   const query = api.alpha.alpha.useQuery({
     email: alphaData.data.email,
     first: alphaData.data.first,
@@ -133,23 +134,10 @@ const Home: NextPage = () => {
     );
   }
 
-  const createPost = () => {
-    console.log('create post');
-  };
   return (
     <Layout>
       <Flex direction='column' w='800px' justify={'center'} align='center'>
-        <Flex p={2} mb={2} direction='column'>
-          <Flex direction='row'>
-            <Heading size='2xl' fontWeight='900'>
-              FlightPlan
-            </Heading>
-            <Button onClick={createPost} colorScheme='facebook'>
-              Create Post
-            </Button>
-          </Flex>
-          <PostFeed />
-        </Flex>
+        <PostViewer />
       </Flex>
     </Layout>
   );

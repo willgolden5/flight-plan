@@ -1,9 +1,7 @@
 import { Avatar, Box, Button, Card, CardBody, Flex, Heading, Text } from '@chakra-ui/react';
 import { Posts, User } from '@prisma/client';
-import { useEffect, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { api } from 'flight-plan/utils/api';
-import { useSession } from 'next-auth/react';
 
 export const PostStatus = {
   LOOKING: 'LOOKING',
@@ -47,7 +45,7 @@ const PostCard = ({ post }: { post: Posts }) => {
               </Flex>
               <Flex direction='column' align='center' justify='center' id='user-name'>
                 <Heading size='md' fontWeight='900'>
-                  {/* {post.author.name} */}Will Golden
+                  {post.title}
                 </Heading>
                 <Text>Certificate Type: {post.certificate.map((cert) => cert)}</Text>
                 <Text>Pilot Ratings: {post.ratings.map((rate) => rate)}</Text>
