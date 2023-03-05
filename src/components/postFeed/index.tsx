@@ -1,7 +1,9 @@
 import { Avatar, Box, Card, CardBody, Flex, Heading, Text } from '@chakra-ui/react';
-import { User } from '@prisma/client';
-import { useState } from 'react';
+import { Posts, User } from '@prisma/client';
+import { useEffect, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
+import { api } from 'flight-plan/utils/api';
+import { useSession } from 'next-auth/react';
 
 const PostStatus = {
   LOOKING: 'LOOKING',
@@ -76,12 +78,46 @@ const PostCard = ({ post }: { post: Post }) => {
 };
 
 const PostFeed = () => {
+  const allposts = api.post.all.useQuery();
   const [posts, setPosts] = useState<Post[]>([] as Post[]);
+
+  //   const postsToPost = async (posts: Posts[]): Promise<Post[]> => {
+  //     const { data, status } = useSession({
+  //       required: true,
+  //     });
+
+  //     // get user data for each post
+  //     //   return posts.map(post => {
+  //     //     return {
+  //     //         id: post.id,
+  //     //         author: data?.user,
+  //     //         authorMetaData: {
+  //     //           certificate: string;
+  //     //           ratings: string[];
+  //     //         },
+  //     //         title: string,
+  //     //         body: string,
+  //     //         location: string,
+  //     //         date: string,
+  //     //         comments: Comment[],
+  //     //         status: typeof PostStatus[keyof typeof PostStatus],
+  //     //     }
+  //     //   });
+
+  //     return Promise.all([]);
+  //   };
+
+  //   useEffect(() => {
+  //     if (allposts.data) {
+  //       // TODO: join post and pilot data to create a post
+  //       setPosts(() => await postsToPost(allposts.data));
+  //     }
+  //   }, [allposts.data]);
   return (
     <Virtuoso
       style={{ height: '80vh', width: '100%' }}
       data={posts}
-      itemContent={(_, data: Post) => <PostCard post={data} />}
+      itemContent={(_: any, data: Post) => <PostCard post={data} />}
     />
   );
 };

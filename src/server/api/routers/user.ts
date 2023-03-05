@@ -22,5 +22,12 @@ export const alphaRouter = createTRPCRouter({
         last: input.last,
       }
     })),
+    getPilotCredentials: protectedProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input, ctx }) => ctx.prisma.pilotCredentials.findUnique({
+        where: { userId: input.userId },
+      })
+  ),
+
 
 });
