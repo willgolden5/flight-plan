@@ -40,7 +40,7 @@ const SignIn = ({ providers, csrfToken }: SignInProps) => {
             </Button>
           </form>
         </Flex>
-        <Stack isInline p={4}>
+        <Flex direction='row' justify='space-evenly' w='100%' py={4}>
           {Object.values(providers as Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider>).map(
             (provider) => {
               if (provider.name === 'Email') {
@@ -60,7 +60,7 @@ const SignIn = ({ providers, csrfToken }: SignInProps) => {
               );
             }
           )}
-        </Stack>
+        </Flex>
       </Flex>
     </Layout>
   );
