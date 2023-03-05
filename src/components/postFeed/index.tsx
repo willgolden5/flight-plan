@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardBody, Flex, Heading, Text } from '@chakra-ui/react';
+import { Avatar, Box, Button, Card, CardBody, Flex, Heading, Text } from '@chakra-ui/react';
 import { Posts, User } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
@@ -37,11 +37,11 @@ export interface Post {
 
 const PostCard = ({ post }: { post: Posts }) => {
   return (
-    <Card>
-      <CardBody>
-        <Flex direction='column' align='center' justify='center'>
+    <Card border='1px black solid'>
+      <CardBody w='100%'>
+        <Flex direction='column' align='center' justify='center' w='100%'>
           <Flex direction='row' align='center' justify='center' id='user-data'>
-            <Flex direction='row' align='center' justify='center' id='user-info'>
+            <Flex direction='row' align='center' id='user-info'>
               <Flex direction='column' align='center' justify='center' id='user-avatar'>
                 <Avatar size='md' />
               </Flex>
@@ -66,8 +66,11 @@ const PostCard = ({ post }: { post: Posts }) => {
             </Flex>
           </Flex>
           <Flex direction='row' align='center' justify='center' id='post-actions'>
-            <Flex direction='column' align='center' justify='center' id='post-actions'>
-              <Text>Status:</Text>
+            <Flex direction='row' align='center' justify='center' id='post-actions'>
+              <Button variant='outline' p={2}>
+                Comment
+              </Button>
+              <Text>Status: </Text>
               <Text>{post.status}</Text>
             </Flex>
           </Flex>
@@ -78,18 +81,8 @@ const PostCard = ({ post }: { post: Posts }) => {
 };
 
 const PostFeed = () => {
-  const { data, error } = api.post.all.useQuery();
-  // const [posts, setPosts] = useState<Post[]>([] as Post[]);
-  // const { data, status } = useSession({
-  //   required: true,
-  // });
+  const { data } = api.post.all.useQuery();
 
-  //   useEffect(() => {
-  //     if (allposts.data) {
-  //       // TODO: join post and pilot data to create a post
-  //       setPosts(() => await postsToPost(allposts.data));
-  //     }
-  //   }, [allposts.data]);
   return (
     <Virtuoso
       style={{ height: '80vh', width: '700px' }}
