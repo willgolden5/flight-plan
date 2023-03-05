@@ -35,7 +35,7 @@ export interface Post {
   status: typeof PostStatus[keyof typeof PostStatus];
 }
 
-const PostCard = ({ post }: { post: Post }) => {
+const PostCard = ({ post }: { post: Posts }) => {
   return (
     <Card>
       <CardBody>
@@ -43,14 +43,14 @@ const PostCard = ({ post }: { post: Post }) => {
           <Flex direction='row' align='center' justify='center' id='user-data'>
             <Flex direction='row' align='center' justify='center' id='user-info'>
               <Flex direction='column' align='center' justify='center' id='user-avatar'>
-                <Avatar size='md' name={post.author.name ? post.author.name : ''} />
+                <Avatar size='md' />
               </Flex>
               <Flex direction='column' align='center' justify='center' id='user-name'>
                 <Heading size='md' fontWeight='900'>
-                  {post.author.name}
+                  {/* {post.author.name} */}Will Golden
                 </Heading>
-                <Text>Certificate Type: {post.authorMetaData.certificate}</Text>
-                <Text>Pilot Ratings: {post.authorMetaData.ratings}</Text>
+                <Text>Certificate Type: {post.certificate.map((cert) => cert)}</Text>
+                <Text>Pilot Ratings: {post.ratings.map((rate) => rate)}</Text>
               </Flex>
               <Flex direction='column' align='center' justify='center' id='user-name'>
                 <Box w='100px' h='100px' border='1px solid black'>
@@ -62,7 +62,7 @@ const PostCard = ({ post }: { post: Post }) => {
           <Flex direction='row' align='center' justify='center' id='post-details'>
             <Flex direction='column' align='center' justify='center' id='post-body'>
               <Heading>{post.title}</Heading>
-              <Text>{post.body}</Text>
+              <Text>{post.content}</Text>
             </Flex>
           </Flex>
           <Flex direction='row' align='center' justify='center' id='post-actions'>
@@ -78,34 +78,11 @@ const PostCard = ({ post }: { post: Post }) => {
 };
 
 const PostFeed = () => {
-  const allposts = api.post.all.useQuery();
-  const [posts, setPosts] = useState<Post[]>([] as Post[]);
-
-    const postsToPost = async (posts: Posts[]): Promise<Post[]> => {
-      const { data, status } = useSession({
-        required: true,
-      });
-
-  //     // get user data for each post
-  //     //   return posts.map(post => {
-  //     //     return {
-  //     //         id: post.id,
-  //     //         author: data?.user,
-  //     //         authorMetaData: {
-  //     //           certificate: string;
-  //     //           ratings: string[];
-  //     //         },
-  //     //         title: string,
-  //     //         body: string,
-  //     //         location: string,
-  //     //         date: string,
-  //     //         comments: Comment[],
-  //     //         status: typeof PostStatus[keyof typeof PostStatus],
-  //     //     }
-  //     //   });
-
-  //     return Promise.all([]);
-  //   };
+  const { data, error } = api.post.all.useQuery();
+  // const [posts, setPosts] = useState<Post[]>([] as Post[]);
+  // const { data, status } = useSession({
+  //   required: true,
+  // });
 
   //   useEffect(() => {
   //     if (allposts.data) {
@@ -115,9 +92,9 @@ const PostFeed = () => {
   //   }, [allposts.data]);
   return (
     <Virtuoso
-      style={{ height: '80vh', width: '100%' }}
-      data={posts}
-      itemContent={(_: any, data: Post) => <PostCard post={data} />}
+      style={{ height: '80vh', width: '700px' }}
+      data={data}
+      itemContent={(_: any, data: Posts) => <PostCard post={data} />}
     />
   );
 };

@@ -20,6 +20,7 @@ import { ArrowRightIcon, CheckIcon } from '@chakra-ui/icons';
 import LottiePlane from 'flight-plan/components/LottiePlane';
 import SignUp from 'flight-plan/components/SignUpModal';
 import { useState } from 'react';
+import PostFeed from 'flight-plan/components/postFeed';
 
 type AlphaData = {
   data: { email: string; first: string; last: string };
@@ -136,8 +137,9 @@ const Home: NextPage = () => {
       <Flex direction='column' w='375px' justify={'center'} align='center'>
         <Flex p={2} mb={2} direction='column'>
           <Heading size='2xl' fontWeight='900'>
-            Flight Plan
+            FlightPlan
           </Heading>
+          <PostFeed />
         </Flex>
       </Flex>
     </Layout>
