@@ -34,43 +34,43 @@ export interface Post {
 }
 
 const PostCard = ({ post }: { post: Posts }) => {
+  const { data } = api.alpha.findUser.useQuery({ userId: post.authorId });
+
+  if (!data) return null;
   return (
-    <Card border='1px black solid'>
+    <Card border='1px black solid' my={2}>
       <CardBody w='100%'>
         <Flex direction='column' align='center' justify='center' w='100%'>
-          <Flex direction='row' align='center' justify='center' id='user-data'>
-            <Flex direction='row' align='center' id='user-info'>
+          <Flex direction='row' align='center' justify='center' id='user-data' w='100%'>
+            <Flex direction='row' justify='space-between' align='center' p={2} w='100%' id='user-info'>
               <Flex direction='column' align='center' justify='center' id='user-avatar'>
-                <Avatar size='md' />
+                <Avatar size='lg' />
+                <Flex direction='column' align='left' w='100%' id='user-name'>
+                  <Heading size='md' fontWeight='900'>
+                    {data.name}
+                  </Heading>
+                  <Text>Type: {post.certificate.map((cert) => cert)}</Text>
+                  <Text>Pilot Ratings: {post.ratings.map((rate) => rate)}</Text>
+                  <Text>Status: {post.status}</Text>
+                </Flex>
+              </Flex>
+              <Flex direction='row' align='flex-start' justify='center' h='100%' w='100%' id='post-details'>
+                <Flex direction='column' align='center' justify='center' id='post-body'>
+                  <Heading>{post.title}</Heading>
+                  <Text>{post.content}</Text>
+                </Flex>
               </Flex>
               <Flex direction='column' align='center' justify='center' id='user-name'>
-                <Heading size='md' fontWeight='900'>
-                  {post.title}
-                </Heading>
-                <Text>Certificate Type: {post.certificate.map((cert) => cert)}</Text>
-                <Text>Pilot Ratings: {post.ratings.map((rate) => rate)}</Text>
-              </Flex>
-              <Flex direction='column' align='center' justify='center' id='user-name'>
-                <Box w='100px' h='100px' border='1px solid black'>
+                <Box w='275px' h='200px' border='1px solid black'>
                   MAP HERE
                 </Box>
               </Flex>
             </Flex>
           </Flex>
-          <Flex direction='row' align='center' justify='center' id='post-details'>
-            <Flex direction='column' align='center' justify='center' id='post-body'>
-              <Heading>{post.title}</Heading>
-              <Text>{post.content}</Text>
-            </Flex>
-          </Flex>
-          <Flex direction='row' align='center' justify='center' id='post-actions'>
-            <Flex direction='row' align='center' justify='center' id='post-actions'>
-              <Button variant='outline' p={2}>
-                Comment
-              </Button>
-              <Text>Status: </Text>
-              <Text>{post.status}</Text>
-            </Flex>
+          <Flex direction='row' align='center' justify='center' w='100%' id='post-actions' p={2}>
+            <Button colorScheme='facebook' w='100%' p={2}>
+              Comment
+            </Button>
           </Flex>
         </Flex>
       </CardBody>
