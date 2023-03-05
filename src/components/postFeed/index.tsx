@@ -5,7 +5,7 @@ import { Virtuoso } from 'react-virtuoso';
 import { api } from 'flight-plan/utils/api';
 import { useSession } from 'next-auth/react';
 
-const PostStatus = {
+export const PostStatus = {
   LOOKING: 'LOOKING',
   MATCHED: 'MATCHED',
   INFLIGHT: 'INFLIGHT',
@@ -13,14 +13,14 @@ const PostStatus = {
   CANCELED: 'CANCELED',
 } as const;
 
-interface Comment {
+export interface Comment {
   id: number;
   body: string;
   date: string;
   author: User;
 }
 
-interface Post {
+export interface Post {
   id: number;
   author: User;
   authorMetaData: {
@@ -81,10 +81,10 @@ const PostFeed = () => {
   const allposts = api.post.all.useQuery();
   const [posts, setPosts] = useState<Post[]>([] as Post[]);
 
-  //   const postsToPost = async (posts: Posts[]): Promise<Post[]> => {
-  //     const { data, status } = useSession({
-  //       required: true,
-  //     });
+    const postsToPost = async (posts: Posts[]): Promise<Post[]> => {
+      const { data, status } = useSession({
+        required: true,
+      });
 
   //     // get user data for each post
   //     //   return posts.map(post => {
