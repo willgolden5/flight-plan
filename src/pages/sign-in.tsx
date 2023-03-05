@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Button, Flex, Heading, Input, Stack, Text } from '@chakra-ui/react';
+import DiscordIcon from 'flight-plan/components/icons/Discord';
 import Layout from 'flight-plan/components/Layout';
 import { type NextPageContext } from 'next';
 import { type BuiltInProviderType } from 'next-auth/providers';
@@ -17,14 +18,30 @@ type SignInProps = {
   csrfToken: string | undefined;
 };
 
+const colorButton = (provider: string) => {
+  switch (provider.toLowerCase()) {
+    case 'facebook':
+      return 'facebook';
+    case 'google':
+      return 'green';
+    case 'twitter':
+      return 'twitter';
+    case 'github':
+      return 'gray';
+    case 'discord':
+      return 'purple';
+    default:
+      return 'facebook';
+  }
+};
 const SignIn = ({ providers, csrfToken }: SignInProps) => {
   return (
     <Layout>
-      <Flex align='left' p={2} justify='center' direction='column' w='375px'>
-        <Heading mb={4} alignContent='center'>
-          Sign In
+      <Flex align='center' p={2} justify='center' direction='column' w='375px'>
+        <Heading mb={2} alignContent='center'>
+          Sign In:
         </Heading>
-        <Flex w='100%' h='100%'>
+        {/* <Flex w='100%' h='100%'>
           <form method='post' action='/api/auth/signin/email'>
             <Input name='csrfToken' type='hidden' defaultValue={csrfToken} />
             <label>
@@ -39,19 +56,20 @@ const SignIn = ({ providers, csrfToken }: SignInProps) => {
               Sign in
             </Button>
           </form>
-        </Flex>
-        <Flex direction='row' justify='space-evenly' w='100%' py={4}>
+        </Flex> */}
+        <Flex direction='column' justify='space-evenly' w='100%' py={4}>
           {Object.values(providers as Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider>).map(
             (provider) => {
-              if (provider.name === 'Email') {
+              if (provider.name === 'Email' || provider.name === 'Credentials' || provider.name === 'Google') {
                 return null;
               }
               return (
-                <Flex key={provider.name}>
+                <Flex key={provider.name} w='100%'>
                   <Button
-                    variant='outline'
                     borderColor='blackAlpha.900'
-                    color='facebook'
+                    colorScheme={colorButton(provider.name)}
+                    m={2}
+                    w='100%'
                     onClick={() => signIn(provider.id)}
                   >
                     Sign in with {provider.name}
