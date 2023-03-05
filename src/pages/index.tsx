@@ -29,9 +29,9 @@ type AlphaData = {
 const Home: NextPage = () => {
   const { status } = useSession({
     required: true,
-    // onUnauthenticated() {
-    //   // The user is not authenticated, handle it here.
-    // },
+    onUnauthenticated() {
+          // The user is not authenticated, handle it here.
+      },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
     }
   };
 
-  if (status === 'loading') {
+  if (status !== 'authenticated') {
     return (
       <Layout>
         <Flex direction='column' w='375px' justify={'center'} align='center'>
