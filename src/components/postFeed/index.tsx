@@ -85,7 +85,7 @@ const PostFeed = () => {
 
   return (
     <Virtuoso
-      style={{ height: '80vh', width: '700px' }}
+      style={{ height: '80vh', width: '900px' }}
       data={data}
       itemContent={(_: any, data: Posts) => <PostCard post={data} />}
     />

@@ -132,13 +132,22 @@ const Home: NextPage = () => {
       </Layout>
     );
   }
+
+  const createPost = () => {
+    console.log('create post');
+  };
   return (
     <Layout>
-      <Flex direction='column' w='375px' justify={'center'} align='center'>
+      <Flex direction='column' w='800px' justify={'center'} align='center'>
         <Flex p={2} mb={2} direction='column'>
-          <Heading size='2xl' fontWeight='900'>
-            FlightPlan
-          </Heading>
+          <Flex direction='row'>
+            <Heading size='2xl' fontWeight='900'>
+              FlightPlan
+            </Heading>
+            <Button onClick={createPost} colorScheme='facebook'>
+              Create Post
+            </Button>
+          </Flex>
           <PostFeed />
         </Flex>
       </Flex>
