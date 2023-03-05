@@ -68,7 +68,7 @@ const PostCard = ({ post }: { post: Posts }) => {
             </Flex>
           </Flex>
           <Flex direction='row' align='center' justify='center' w='100%' id='post-actions' p={2}>
-            <Button colorScheme='facebook' w='100%' p={2}>
+            <Button isDisabled colorScheme='facebook' w='100%' p={2}>
               Comment
             </Button>
           </Flex>
