@@ -30,8 +30,8 @@ const Home: NextPage = () => {
   const { status } = useSession({
     required: true,
     onUnauthenticated() {
-          // The user is not authenticated, handle it here.
-      },
+      // The user is not authenticated, handle it here.
+    },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -136,7 +136,10 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <Flex direction='column' w='800px' justify={'center'} align='center'>
+      <Flex direction='column' align='center' justify='center'>
+        <Heading size='2xl' fontWeight='900'>
+          Feed:
+        </Heading>
         <PostViewer />
       </Flex>
     </Layout>

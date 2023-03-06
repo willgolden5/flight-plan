@@ -82,11 +82,14 @@ const PostFeed = () => {
   const { data } = api.post.all.useQuery();
 
   return (
-    <Virtuoso
-      style={{ height: '80vh', width: '900px' }}
-      data={data}
-      itemContent={(_: any, data: Posts) => <PostCard post={data} />}
-    />
+    <Flex direction='row' h='100%' w='100%'>
+      <Virtuoso
+        useWindowScroll
+        style={{ width: '750px' }}
+        data={data}
+        itemContent={(_: any, data: Posts) => <PostCard post={data} />}
+      />
+    </Flex>
   );
 };
 
