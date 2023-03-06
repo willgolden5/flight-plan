@@ -71,7 +71,7 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Username", type: "text", placeholder: "" },
         password: { label: "Password", type: "" }
       },
-      async authorize(credentials, req) {
+      authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
         const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
   
