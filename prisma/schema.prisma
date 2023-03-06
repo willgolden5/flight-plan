@@ -20,6 +20,30 @@ model Alpha {
   last  String
 }
 
+model Posts {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  content     String
+  published   Boolean  @default(false)
+  authorId    String
+  certificate String[] @default([])
+  ratings     String[] @default([])
+  status      String
+  author      User     @relation(fields: [authorId], references: [id])
+}
+
+model PilotCredentials {
+  id             String   @id @default(cuid())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  certificate    String[] @default([])
+  ratings        String[] @default([])
+  userId         String   @unique
+  certificateNum String   @unique
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -53,6 +77,7 @@ model User {
   emailVerified DateTime?
   image         String?
   accounts      Account[]
+  Posts         Posts[]
   sessions      Session[]
 }
 

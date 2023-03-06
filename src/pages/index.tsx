@@ -1,13 +1,11 @@
-import styles from './index.module.css';
 import { type NextPage } from 'next';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { api } from 'flight-plan/utils/api';
 import Layout from 'flight-plan/components/Layout';
 import {
   Button,
   Flex,
   Heading,
-  Text,
   Modal,
   useDisclosure,
   ModalOverlay,
@@ -18,16 +16,23 @@ import {
   ModalFooter,
   useToast,
 } from '@chakra-ui/react';
-import { ArrowRightIcon, ArrowDownIcon, CheckIcon } from '@chakra-ui/icons';
+import { ArrowRightIcon, CheckIcon } from '@chakra-ui/icons';
 import LottiePlane from 'flight-plan/components/LottiePlane';
 import SignUp from 'flight-plan/components/SignUpModal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import PostViewer from 'flight-plan/components/PostViewer';
 
 type AlphaData = {
   data: { email: string; first: string; last: string };
 };
 
 const Home: NextPage = () => {
+  const { status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      // The user is not authenticated, handle it here.
+    },
+  });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const [alphaData, setAlphaData] = useState<AlphaData>({
@@ -37,6 +42,7 @@ const Home: NextPage = () => {
       last: '',
     },
   } as AlphaData);
+
   const query = api.alpha.alpha.useQuery({
     email: alphaData.data.email,
     first: alphaData.data.first,
@@ -67,84 +73,74 @@ const Home: NextPage = () => {
       });
     }
   };
+
+  if (status !== 'authenticated') {
+    return (
+      <Layout>
+        <Flex direction='column' w='375px' justify={'center'} align='center'>
+          <Flex p={2} mb={2} direction='column'>
+            <Heading size='2xl' fontWeight='900'>
+              Flight Plan
+            </Heading>
+          </Flex>
+          <LottiePlane />
+          <Flex w='100%' h='full' justify='center' align='center'>
+            {/* <Button leftIcon={<ArrowDownIcon h={4} />} colorScheme='facebook' w='45%' m={2} px={5} py={2}>
+              Sign In
+            </Button> */}
+            <Button
+              onClick={onOpen}
+              // variant='outline'
+              rightIcon={<ArrowRightIcon w={2} />}
+              colorScheme='facebook'
+              w='100%'
+              m={2}
+            >
+              Join Waitlist
+            </Button>
+            <Modal onClose={onClose} isOpen={isOpen} isCentered>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader fontSize='26px' fontWeight='800'>
+                  Sign Up
+                </ModalHeader>
+                <ModalCloseButton />
+                <ModalBody justifyContent='center'>
+                  Leave your information below for access to the Flight Plan Closed Alpha.
+                </ModalBody>
+                <Flex p={4}>
+                  <SignUp dataAction={signIn} />
+                </Flex>
+                <ModalFooter w='100%'>
+                  <Button
+                    onClick={() => {
+                      submit();
+                      onClose();
+                    }}
+                    leftIcon={<CheckIcon h={4} />}
+                    colorScheme='facebook'
+                    w='100%'
+                    mr={2}
+                    px={5}
+                  >
+                    Submit
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          </Flex>
+        </Flex>
+      </Layout>
+    );
+  }
+
   return (
-    <Layout>
-      <Flex direction='column' w='375px' justify={'center'} align='center'>
-        <Flex p={2} mb={2} direction='column'>
-          <Heading size='2xl' fontWeight='900'>
-            Flight Plan
-          </Heading>
-        </Flex>
-        <LottiePlane />
-        <Flex w='100%' h='full' justify='center' align='center'>
-          {/* <Button leftIcon={<ArrowDownIcon h={4} />} colorScheme='facebook' w='45%' m={2} px={5} py={2}>
-            Sign In
-          </Button> */}
-          <Button
-            onClick={onOpen}
-            // variant='outline'
-            rightIcon={<ArrowRightIcon w={2} />}
-            colorScheme='facebook'
-            w='100%'
-            m={2}
-          >
-            Join Waitlist
-          </Button>
-          <Modal onClose={onClose} isOpen={isOpen} isCentered>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader fontSize='26px' fontWeight='800'>
-                Sign Up
-              </ModalHeader>
-              <ModalCloseButton />
-              <ModalBody justifyContent='center'>
-                Leave your information below for access to the Flight Plan Closed Alpha.
-              </ModalBody>
-              <Flex p={4}>
-                <SignUp dataAction={signIn} />
-              </Flex>
-              <ModalFooter w='100%'>
-                <Button
-                  onClick={() => {
-                    submit();
-                    onClose();
-                  }}
-                  leftIcon={<CheckIcon h={4} />}
-                  colorScheme='facebook'
-                  w='100%'
-                  mr={2}
-                  px={5}
-                >
-                  Submit
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-        </Flex>
+    <Flex w='100%'>
+      <Flex direction='column' w='100%' align='center' justify='center'>
+        <PostViewer />
       </Flex>
-    </Layout>
+    </Flex>
   );
 };
 
 export default Home;
-
-const AuthShowcase: React.FC = () => {
-  const { data: sessionData } = useSession();
-
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
-
-  return (
-    <div className={styles.authContainer}>
-      <p className={styles.showcaseText}>
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
-      <button className={styles.loginButton} onClick={sessionData ? () => void signOut() : () => void signIn()}>
-        {sessionData ? 'Sign out' : 'Sign in'}
-      </button>
-    </div>
-  );
-};
