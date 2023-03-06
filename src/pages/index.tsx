@@ -135,14 +135,11 @@ const Home: NextPage = () => {
   }
 
   return (
-    <Layout>
-      <Flex direction='column' align='center' justify='center'>
-        <Heading size='2xl' fontWeight='900'>
-          Feed:
-        </Heading>
+    <Flex w='100%'>
+      <Flex direction='column' w='100%' align='center' justify='center'>
         <PostViewer />
       </Flex>
-    </Layout>
+    </Flex>
   );
 };
 

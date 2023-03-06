@@ -51,9 +51,9 @@ const PostViewer = () => {
   };
   return (
     <Flex p={2} mb={2} direction='column'>
-      <Flex direction='row'>
+      <Flex direction='row' w='100%' align='center' justify='space-between'>
         <Heading size='2xl' fontWeight='900'>
-          FlightPlan
+          Flight Plan
         </Heading>
         <Button onClick={onOpen} colorScheme='facebook'>
           Create Post

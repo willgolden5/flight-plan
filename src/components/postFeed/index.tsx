@@ -82,7 +82,7 @@ const PostFeed = () => {
   const { data } = api.post.all.useQuery();
 
   return (
-    <Flex direction='row' h='100%' w='100%'>
+    <Flex direction='row' h='100%' w='100%' justify='center' align='center'>
       <Virtuoso
         useWindowScroll
         style={{ width: '750px' }}
