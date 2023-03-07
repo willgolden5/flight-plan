@@ -1,7 +1,7 @@
 import { type NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { api } from 'flight-plan/utils/api';
-import Layout from 'flight-plan/components/Layout';
+import Layout from 'flight-plan/components/layout/Layout';
 import {
   Button,
   Flex,
@@ -27,12 +27,7 @@ type AlphaData = {
 };
 
 const Home: NextPage = () => {
-  const { status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      // The user is not authenticated, handle it here.
-    },
-  });
+  const { status } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const [alphaData, setAlphaData] = useState<AlphaData>({
