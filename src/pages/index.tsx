@@ -27,12 +27,7 @@ type AlphaData = {
 };
 
 const Home: NextPage = () => {
-  const { status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      // The user is not authenticated, handle it here.
-    },
-  });
+  const { status } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const [alphaData, setAlphaData] = useState<AlphaData>({

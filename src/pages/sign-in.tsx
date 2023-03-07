@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Button, Flex, Heading, Input, Stack, Text } from '@chakra-ui/react';
-import DiscordIcon from 'flight-plan/components/icons/Discord';
 import Layout from 'flight-plan/components/layout/Layout';
 import { type NextPageContext } from 'next';
 import { type BuiltInProviderType } from 'next-auth/providers';
@@ -39,7 +38,7 @@ const SignIn = ({ providers, csrfToken }: SignInProps) => {
     <Layout>
       <Flex align='center' p={2} justify='center' direction='column' w='375px'>
         <Heading mb={2} alignContent='center'>
-          Sign In:
+          Authorize Using:
         </Heading>
         {/* <Flex w='100%' h='100%'>
           <form method='post' action='/api/auth/signin/email'>
