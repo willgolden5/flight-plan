@@ -1,7 +1,7 @@
 import { type NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { api } from 'flight-plan/utils/api';
-import Layout from 'flight-plan/components/Layout';
+import Layout from 'flight-plan/components/layout/Layout';
 import {
   Button,
   Flex,

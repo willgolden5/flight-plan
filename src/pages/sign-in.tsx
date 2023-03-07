@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Button, Flex, Heading, Input, Stack, Text } from '@chakra-ui/react';
 import DiscordIcon from 'flight-plan/components/icons/Discord';
-import Layout from 'flight-plan/components/Layout';
+import Layout from 'flight-plan/components/layout/Layout';
 import { type NextPageContext } from 'next';
 import { type BuiltInProviderType } from 'next-auth/providers';
 import {
@@ -18,7 +18,7 @@ type SignInProps = {
   csrfToken: string | undefined;
 };
 
-const colorButton = (provider: string) => {
+export const colorButton = (provider: string) => {
   switch (provider.toLowerCase()) {
     case 'facebook':
       return 'facebook';
