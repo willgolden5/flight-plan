@@ -17,7 +17,7 @@ import {
 import { Posts } from '@prisma/client';
 import { api } from 'flight-plan/utils/api';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PostFeed from './postFeed';
 
 const PostViewer = () => {
@@ -47,6 +47,10 @@ const PostViewer = () => {
       author: data?.user.name || '',
     });
   };
+
+  useEffect(() => {
+    console.log(pilotCreds.data, data);
+  }, [pilotCreds.data]);
   return (
     <Flex p={2} mb={2} direction='column'>
       <Flex direction='row' w='100%' align='center' justify='space-between'>

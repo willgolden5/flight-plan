@@ -4,6 +4,11 @@ import {
   createTRPCRouter,
   protectedProcedure,
 } from "flight-plan/server/api/trpc";
+import { MeiliSearch } from 'meilisearch'
+
+const client = new MeiliSearch({ host: 'http://localhost:7700' })
+// client.index('movies').addDocuments(movies)
+//   .then((res) => console.log(res))
 
 
 export const postsRouter = createTRPCRouter({

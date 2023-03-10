@@ -58,13 +58,23 @@ const PostCard = ({ post }: { post: Posts }) => {
           <Flex direction='row' align='center' justify='center' id='user-data' w='100%'>
             <Flex direction='row' justify='space-between' align='center' p={2} w='100%' id='user-info'>
               <Flex direction='column' align='center' justify='center' id='user-avatar'>
-                <Avatar size='lg' />
+                <Avatar size='lg' src={data.image || ''} />
                 <Flex direction='column' align='left' w='100%' id='user-name'>
                   <Heading size='md' fontWeight='900'>
                     {data.name}
                   </Heading>
-                  <Text>Type: {post.certificate.map((cert) => cert)}</Text>
-                  <Text>Pilot Ratings: {post.ratings.map((rate) => rate)}</Text>
+                  <Text>
+                    Type:{' '}
+                    {post.certificate.map((cert) => (
+                      <Text key={cert}>{cert}</Text>
+                    ))}
+                  </Text>
+                  <Text>
+                    Pilot Ratings:{' '}
+                    {post.ratings.map((rate) => (
+                      <Text key={rate}>{rate}</Text>
+                    ))}
+                  </Text>
                   <Text>Status: {post.status}</Text>
                 </Flex>
               </Flex>
