@@ -1,7 +1,21 @@
-import { Avatar, Box, Button, Card, CardBody, Flex, Heading, Text } from '@chakra-ui/react';
+/* eslint-disable react/no-children-prop */
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Flex,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Text,
+} from '@chakra-ui/react';
 import { Posts, User } from '@prisma/client';
 import { Virtuoso } from 'react-virtuoso';
 import { api } from 'flight-plan/utils/api';
+import { SearchIcon } from '@chakra-ui/icons';
 
 export const PostStatus = {
   LOOKING: 'LOOKING',
@@ -82,7 +96,13 @@ const PostFeed = () => {
   const { data } = api.post.all.useQuery();
 
   return (
-    <Flex direction='row' h='100%' w='100%' justify='center' align='center'>
+    <Flex direction='column' h='100%' w='100%' justify='center' align='center'>
+      <Flex direction='row' w='100%'>
+        <InputGroup size='lg'>
+          <InputLeftElement pointerEvents='none' children={<SearchIcon color='gray.300' />} />
+          <Input type='tel' placeholder='Flightplan search ...' />
+        </InputGroup>
+      </Flex>
       <Virtuoso
         useWindowScroll
         style={{ width: '750px' }}

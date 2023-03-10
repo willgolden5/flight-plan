@@ -22,7 +22,7 @@ export const userRouter = createTRPCRouter({
         last: input.last,
       }
     })),
-    getPilotCredentials: protectedProcedure
+  getPilotCredentials: protectedProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input, ctx }) => ctx.prisma.pilotCredentials.findUnique({
         where: { userId: input.userId },

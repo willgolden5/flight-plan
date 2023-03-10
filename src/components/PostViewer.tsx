@@ -11,43 +11,41 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalFooter,
+  Select,
+  Input,
 } from '@chakra-ui/react';
 import { Posts } from '@prisma/client';
 import { api } from 'flight-plan/utils/api';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import PostFeed from './postFeed';
 
 const PostViewer = () => {
+  const { data } = useSession();
+  const pilotCreds = api.alpha.getPilotCredentials.useQuery({ userId: data?.user.id || '' });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [post, setPost] = useState({
-    title: 'test',
-    content: 'test',
+  const create = api.post.create.useMutation();
+
+  const [post, setPost] = useState<Posts>({
+    title: '',
+    content: '',
     published: true,
-    authorId: 'cleuf4b9t00023qmr84b2z339',
-    certificate: ['1'],
-    ratings: ['1'],
-    status: '1',
+    authorId: data?.user.id || '',
+    certificate: [pilotCreds.data?.certificateNum || ''],
+    ratings: [...(pilotCreds.data?.certificate.filter((cert) => typeof cert !== 'undefined') || '')],
+    status: 'Open',
   } as Posts);
-  const create = api.post.create.useQuery({
-    title: post.title,
-    content: post.content,
-    published: post.published,
-    author: post.authorId,
-    authorId: post.authorId,
-    certificate: [...post.certificate],
-    ratings: [...post.ratings],
-    status: post.status,
-  });
   const createPost = () => {
-    console.log('create post');
-    if (post.status.length > 3) {
-      if (create.error) {
-        console.log(create.error);
-      } else {
-        onClose();
-        console.log(create.data);
-      }
-    }
+    create.mutate({
+      title: post.title,
+      content: post.content,
+      published: post.published,
+      authorId: post.authorId,
+      certificate: post.certificate || [''],
+      ratings: post.ratings,
+      status: post.status,
+      author: data?.user.name || '',
+    });
   };
   return (
     <Flex p={2} mb={2} direction='column'>
@@ -63,25 +61,28 @@ const PostViewer = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader fontSize='26px' fontWeight='800'>
-            Sign Up
+            New Flight Plan
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody justifyContent='center'>
-            Leave your information below for access to the Flight Plan Closed Alpha.
-          </ModalBody>
+          <ModalBody justifyContent='center'>Create a new flight plan below:</ModalBody>
           <Flex p={4}>
             <form>
               <label>
                 Title:
-                <input value={`${post.title}`} onChange={(e) => setPost({ ...post, title: e.target.value })} />
+                <Input value={`${post.title}`} onChange={(e) => setPost({ ...post, title: e.target.value })} />
               </label>
               <label>
                 Content:
-                <input value={`${post.content}`} onChange={(e) => setPost({ ...post, content: e.target.value })} />
+                <Input value={`${post.content}`} onChange={(e) => setPost({ ...post, content: e.target.value })} />
               </label>
               <label>
-                Status:
-                <input value={`${post.status}`} onChange={(e) => setPost({ ...post, status: e.target.value })} />
+                Flight Status:
+                <Select value={`${post.status}`} onChange={(e) => setPost({ ...post, status: e.target.value })}>
+                  <option value='open'>Open</option>
+                  <option value='planned'>Planned</option>
+                  <option value='pending'>Pending</option>
+                  <option value='published'>Accepted</option>
+                </Select>
               </label>
             </form>
           </Flex>

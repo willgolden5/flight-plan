@@ -20,7 +20,7 @@ export const postsRouter = createTRPCRouter({
     status: z.string(),
     author: z.string(),
 
-  })).query(({ ctx, input }) => {
+  })).mutation(({ ctx, input }) => {
     return ctx.prisma.posts.create({
       data: {
         updatedAt: new Date(),
