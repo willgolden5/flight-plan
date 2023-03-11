@@ -21,13 +21,14 @@ import LottiePlane from 'flight-plan/components/LottiePlane';
 import SignUp from 'flight-plan/components/SignUpModal';
 import { useState } from 'react';
 import PostViewer from 'flight-plan/components/PostViewer';
+import AirmenAuthForm from 'flight-plan/components/AirmenAuthForm';
 
 type AlphaData = {
   data: { email: string; first: string; last: string };
 };
 
 const Home: NextPage = () => {
-  const { status } = useSession();
+  const { status, data } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const [alphaData, setAlphaData] = useState<AlphaData>({
@@ -125,6 +126,14 @@ const Home: NextPage = () => {
             </Modal>
           </Flex>
         </Flex>
+      </Layout>
+    );
+  } else if (!data.user.isPilot) {
+    console.log(data.user.isPilot);
+    // if not a pilot, redirect to pilot airmen auth page
+    return (
+      <Layout>
+        <AirmenAuthForm />
       </Layout>
     );
   }
