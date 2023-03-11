@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import {
   Button,
@@ -12,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { api } from 'flight-plan/utils/api';
 import { useRouter } from 'next/router';
 
 const AirmenAuthForm = () => {
@@ -24,11 +24,17 @@ const AirmenAuthForm = () => {
     userId: '',
     last: '',
   });
-  const pilotCheck = api.pilot.pilotCheck.useMutation();
 
-  const submit = () => {
-    try {
-      pilotCheck.mutate(input);
+  const submit = async () => {
+    const res = await fetch('/api/airmen/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(input),
+    });
+
+    if (res.status === 200) {
       toast({
         title: 'Success',
         description: 'Your certificate has been validated.',
@@ -38,7 +44,28 @@ const AirmenAuthForm = () => {
         position: 'bottom',
       });
       router.push('/');
-    } catch (e) {
+    }
+    if (res.status === 401) {
+      toast({
+        title: 'Error',
+        description: 'Your certificate was not found. Please try again.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom',
+      });
+    }
+    if (res.status === 404) {
+      toast({
+        title: 'Error',
+        description: 'Your certificate was not found. Please try again.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom',
+      });
+    }
+    if (res.status === 500) {
       toast({
         title: 'Error',
         description: 'There was an error validating your certificate. Please try again.',
@@ -47,7 +74,6 @@ const AirmenAuthForm = () => {
         isClosable: true,
         position: 'bottom',
       });
-      console.log(e);
     }
   };
 
