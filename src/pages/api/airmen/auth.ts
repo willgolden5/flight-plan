@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { last, certNum, userId } = req.body
+    const { last, certNum, userId } = req.body as { last: string, certNum: string, userId: string}
     const authResult = await fetch(`https://airmen-auth-service.fly.dev/pilot?lastName=${last}&certificate=${certNum}&id=${userId}`)
     
     if(authResult.status === 401) {
