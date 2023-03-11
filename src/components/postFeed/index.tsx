@@ -106,7 +106,7 @@ const PostFeed = () => {
   const { data } = api.post.all.useQuery();
 
   return (
-    <Flex direction='column' h='100%' w='100%' justify='center' align='center'>
+    <Flex direction='column' h='75vh' w='100%' justify='center' align='center'>
       <Flex direction='row' w='100%'>
         <InputGroup size='lg'>
           <InputLeftElement pointerEvents='none' children={<SearchIcon color='gray.300' />} />
