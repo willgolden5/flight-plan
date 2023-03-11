@@ -14,8 +14,10 @@ import {
 import { useSession } from 'next-auth/react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import LottieLoader from './LottieLoader';
 
 const AirmenAuthForm = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const toast = useToast();
   const { data } = useSession();
@@ -26,6 +28,7 @@ const AirmenAuthForm = () => {
   });
 
   const submit = async () => {
+    setIsLoading(true);
     const res = await fetch('/api/airmen/auth', {
       method: 'POST',
       headers: {
@@ -33,8 +36,9 @@ const AirmenAuthForm = () => {
       },
       body: JSON.stringify(input),
     });
-
     if (res.status === 200) {
+      setIsLoading(false);
+      router.reload();
       toast({
         title: 'Success',
         description: 'Your certificate has been validated.',
@@ -43,9 +47,9 @@ const AirmenAuthForm = () => {
         isClosable: true,
         position: 'bottom',
       });
-      router.push('/');
     }
     if (res.status === 401) {
+      setIsLoading(false);
       toast({
         title: 'Error',
         description: 'Your certificate was not found. Please try again.',
@@ -56,6 +60,7 @@ const AirmenAuthForm = () => {
       });
     }
     if (res.status === 404) {
+      setIsLoading(false);
       toast({
         title: 'Error',
         description: 'Your certificate was not found. Please try again.',
@@ -66,6 +71,7 @@ const AirmenAuthForm = () => {
       });
     }
     if (res.status === 500) {
+      setIsLoading(false);
       toast({
         title: 'Error',
         description: 'There was an error validating your certificate. Please try again.',
@@ -86,6 +92,13 @@ const AirmenAuthForm = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => setInput({ ...input, [e.target.id]: e.target.value });
 
   const isError = input.certNum === '';
+
+  if (isLoading)
+    return (
+      <Flex direction='column' p={2} justify='center' align='center'>
+        <LottieLoader />
+      </Flex>
+    );
 
   return (
     <Flex direction='column' p={2} justify='center' align='center'>
