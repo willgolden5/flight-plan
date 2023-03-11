@@ -23,6 +23,7 @@
     "@trpc/server": "^10.9.0",
     "chrome-aws-lambda": "^10.1.0",
     "framer-motion": "^10.0.0",
+    "meilisearch": "^0.31.1",
     "next": "13.1.6",
     "next-auth": "^4.19.0",
     "puppeteer": "^19.7.2",

@@ -21,6 +21,7 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      isPilot: boolean;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -39,10 +40,15 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session({ session, user }) {
+    async session({ session, user }) {
       if (session.user) {
         session.user.id = user.id;
-        // session.user.role = user.role; <-- put other properties on the session here
+       const data = await prisma.pilotCredentials.findUnique({ where: { userId: user.id } })
+       if(data){
+        session.user.isPilot = true;
+       } else {
+        session.user.isPilot = false;
+       }
       }
       return session;
     },

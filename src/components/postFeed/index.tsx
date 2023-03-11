@@ -1,7 +1,21 @@
-import { Avatar, Box, Button, Card, CardBody, Flex, Heading, Text } from '@chakra-ui/react';
+/* eslint-disable react/no-children-prop */
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Flex,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Text,
+} from '@chakra-ui/react';
 import { Posts, User } from '@prisma/client';
 import { Virtuoso } from 'react-virtuoso';
 import { api } from 'flight-plan/utils/api';
+import { SearchIcon } from '@chakra-ui/icons';
 
 export const PostStatus = {
   LOOKING: 'LOOKING',
@@ -44,13 +58,23 @@ const PostCard = ({ post }: { post: Posts }) => {
           <Flex direction='row' align='center' justify='center' id='user-data' w='100%'>
             <Flex direction='row' justify='space-between' align='center' p={2} w='100%' id='user-info'>
               <Flex direction='column' align='center' justify='center' id='user-avatar'>
-                <Avatar size='lg' />
+                <Avatar size='lg' src={data.image || ''} />
                 <Flex direction='column' align='left' w='100%' id='user-name'>
                   <Heading size='md' fontWeight='900'>
                     {data.name}
                   </Heading>
-                  <Text>Type: {post.certificate.map((cert) => cert)}</Text>
-                  <Text>Pilot Ratings: {post.ratings.map((rate) => rate)}</Text>
+                  <Text>
+                    Type:{' '}
+                    {post.certificate.map((cert) => (
+                      <Text key={cert}>{cert}</Text>
+                    ))}
+                  </Text>
+                  <Text>
+                    Pilot Ratings:{' '}
+                    {post.ratings.map((rate) => (
+                      <Text key={rate}>{rate}</Text>
+                    ))}
+                  </Text>
                   <Text>Status: {post.status}</Text>
                 </Flex>
               </Flex>
@@ -82,7 +106,13 @@ const PostFeed = () => {
   const { data } = api.post.all.useQuery();
 
   return (
-    <Flex direction='row' h='100%' w='100%' justify='center' align='center'>
+    <Flex direction='column' h='75vh' w='100%' justify='center' align='center'>
+      <Flex direction='row' w='100%'>
+        <InputGroup size='lg'>
+          <InputLeftElement pointerEvents='none' children={<SearchIcon color='gray.300' />} />
+          <Input type='tel' placeholder='Flightplan search ...' />
+        </InputGroup>
+      </Flex>
       <Virtuoso
         useWindowScroll
         style={{ width: '750px' }}

@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Avatar, Button, Flex } from '@chakra-ui/react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
 const NavBar = () => {
@@ -10,6 +11,11 @@ const NavBar = () => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     router.push('/sign-in');
   };
+
+  const logout = async () => {
+    // remove auth cookies
+    await signOut();
+  };
   return (
     <Flex position='fixed' dir='row' w='100%' h='100px' justify='space-between' p={2}>
       <Flex dir='row'></Flex>
@@ -18,7 +24,7 @@ const NavBar = () => {
         <Flex w='100%'>
           {status !== 'authenticated' ? (
             <Flex w='100%'>
-              {/* <Button
+              <Button
                 borderColor='blackAlpha.900'
                 variant='outline'
                 colorScheme='facebook'
@@ -26,12 +32,12 @@ const NavBar = () => {
                 w='100%'
                 onClick={login}
               >
-                Sign In / Sign Up
-              </Button> */}
+                Sign In
+              </Button>
             </Flex>
           ) : (
             <Flex w='100%'>
-              <Avatar name={data.user.name || ''} />
+              <Avatar name={data.user.name || ''} onClick={() => logout()} />
             </Flex>
           )}
         </Flex>
