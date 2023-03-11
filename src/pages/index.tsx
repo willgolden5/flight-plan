@@ -81,17 +81,7 @@ const Home: NextPage = () => {
           </Flex>
           <LottiePlane />
           <Flex w='100%' h='full' justify='center' align='center'>
-            {/* <Button leftIcon={<ArrowDownIcon h={4} />} colorScheme='facebook' w='45%' m={2} px={5} py={2}>
-              Sign In
-            </Button> */}
-            <Button
-              onClick={onOpen}
-              // variant='outline'
-              rightIcon={<ArrowRightIcon w={2} />}
-              colorScheme='facebook'
-              w='100%'
-              m={2}
-            >
+            <Button onClick={onOpen} rightIcon={<ArrowRightIcon w={2} />} colorScheme='facebook' w='100%' m={2}>
               Join Waitlist
             </Button>
             <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -128,9 +118,8 @@ const Home: NextPage = () => {
         </Flex>
       </Layout>
     );
-  } else if (!data.user.isPilot) {
-    console.log(data.user.isPilot);
-    // if not a pilot, redirect to pilot airmen auth page
+  }
+  if (!data.user.isPilot) {
     return (
       <Layout>
         <AirmenAuthForm />
