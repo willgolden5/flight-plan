@@ -119,7 +119,7 @@ const Home: NextPage = () => {
       </Layout>
     );
   }
-  if (!data.user.isPilot) {
+  if (data && !data.user.isPilot) {
     return (
       <Layout>
         <AirmenAuthForm />
