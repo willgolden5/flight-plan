@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Avatar, Button, Flex } from '@chakra-ui/react';
+import { Avatar, Button, Flex, useToast } from '@chakra-ui/react';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
 const NavBar = () => {
+  const toast = useToast();
   const router = useRouter();
   const { status, data } = useSession();
 
-  const login = () => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    router.push('/sign-in');
-  };
-
   const logout = async () => {
-    // remove auth cookies
     await signOut();
+    toast({
+      title: 'Success',
+      description: 'You have been logged out.',
+      status: 'warning',
+      duration: 5000,
+    });
   };
   return (
     <Flex position='fixed' dir='row' w='100%' h='100px' justify='space-between' p={2}>
@@ -30,7 +31,7 @@ const NavBar = () => {
                 colorScheme='facebook'
                 m={2}
                 w='100%'
-                onClick={login}
+                onClick={() => router.push('/sign-in')}
               >
                 Sign In
               </Button>

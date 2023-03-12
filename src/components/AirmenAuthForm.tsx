@@ -15,6 +15,7 @@ import { useSession } from 'next-auth/react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import LottieLoader from './LottieLoader';
+import { reloadSession } from 'flight-plan/utils/utils';
 
 const AirmenAuthForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,7 +39,9 @@ const AirmenAuthForm = () => {
     });
     if (res.status === 200) {
       setIsLoading(false);
-      router.reload();
+      // hack to refresh session client side until next-auth has a solution
+      //https://stackoverflow.com/q/70405436
+      reloadSession();
       toast({
         title: 'Success',
         description: 'Your certificate has been validated.',
@@ -118,7 +121,7 @@ const AirmenAuthForm = () => {
             <Input id={'last'} type='last' value={input.last} onChange={handleInputChange} />
           </Flex>
         </Flex>
-        <Button onClick={submit} colorScheme='facebook' type='submit'>
+        <Button onClick={submit} w='100%' colorScheme='facebook' type='submit'>
           Submit
         </Button>
       </FormControl>
