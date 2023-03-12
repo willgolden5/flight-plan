@@ -37,6 +37,25 @@ export const postsRouter = createTRPCRouter({
         ratings: input.ratings,
         status: input.status,
       }
-  })})
+  })}),
+  filtered: protectedProcedure.input(z.object({searchTerm: z.string()})).mutation(async ({ ctx, input }) => {
+    // create posts index then add all posts as documents
+    await client.index('posts').updateFilterableAttributes([
+      'certificate',
+      'ratings',
+      'status',
+      'category',
+      'class',
+      'avionics',
+      'flightLocation',
+      'author',
+      'access'
+    ])
+    const posts = await ctx.prisma.posts.findMany()
+    await client.index('posts').addDocuments(posts)
+    const results = await client.index('posts').search(input.searchTerm)
+    return results;
+  }
+  ),
 
 })
