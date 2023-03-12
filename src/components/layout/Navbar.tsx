@@ -25,7 +25,7 @@ const NavBar = () => {
         <Flex w='100%'>
           {status !== 'authenticated' ? (
             <Flex w='100%'>
-              <Button
+              {/* <Button
                 borderColor='blackAlpha.900'
                 variant='outline'
                 colorScheme='facebook'
@@ -34,7 +34,7 @@ const NavBar = () => {
                 onClick={() => router.push('/sign-in')}
               >
                 Sign In
-              </Button>
+              </Button> */}
             </Flex>
           ) : (
             <Flex w='100%'>
