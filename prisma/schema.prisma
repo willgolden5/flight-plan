@@ -20,22 +20,6 @@ model Alpha {
   last  String
 }
 
-// model Posts {
-//   id             String   @id @default(cuid())
-//   createdAt      DateTime @default(now())
-//   updatedAt      DateTime @updatedAt
-//   authorId       String
-//   certificate    String[] @default([])
-//   ratings        String[] @default([])
-//   status         String
-//   access         Boolean  @default(false)
-//   avionics       String
-//   category       Boolean  @default(false)
-//   class          String
-//   flightLocation String
-//   author         User     @relation(fields: [authorId], references: [id])
-// }
-
 model FlightPlanMetadata {
   id           String      @id @default(cuid())
   takeOffTime  DateTime
