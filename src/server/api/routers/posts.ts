@@ -7,8 +7,17 @@ import {
 import { MeiliSearch } from 'meilisearch'
 
 const client = new MeiliSearch({ host: 'http://localhost:7700' })
-// client.index('movies').addDocuments(movies)
-//   .then((res) => console.log(res))
+void client.index('posts').updateFilterableAttributes([
+  'certificate',
+  'ratings',
+  'status',
+  'category',
+  'class',
+  'avionics',
+  'flightLocation',
+  'author',
+  'access'
+])
 
 
 export const postsRouter = createTRPCRouter({
@@ -39,21 +48,14 @@ export const postsRouter = createTRPCRouter({
       }
   })}),
   filtered: protectedProcedure.input(z.object({searchTerm: z.string()})).mutation(async ({ ctx, input }) => {
-    // create posts index then add all posts as documents
-    await client.index('posts').updateFilterableAttributes([
-      'certificate',
-      'ratings',
-      'status',
-      'category',
-      'class',
-      'avionics',
-      'flightLocation',
-      'author',
-      'access'
-    ])
+    if(input.searchTerm === '') {
+      return await ctx.prisma.posts.findMany()
+    }
+    
     const posts = await ctx.prisma.posts.findMany()
-    await client.index('posts').addDocuments(posts)
-    const results = await client.index('posts').search(input.searchTerm)
+    void client.index('posts').addDocuments(posts).then((res) => { console.log('Documents added',res) })
+    const results = client.index('posts').search(input.searchTerm)
+    console.log(results)
     return results;
   }
   ),

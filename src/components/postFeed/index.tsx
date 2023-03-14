@@ -16,6 +16,7 @@ import { Posts, User } from '@prisma/client';
 import { Virtuoso } from 'react-virtuoso';
 import { api } from 'flight-plan/utils/api';
 import { SearchIcon } from '@chakra-ui/icons';
+import { useEffect, useState } from 'react';
 
 export const PostStatus = {
   LOOKING: 'LOOKING',
@@ -103,14 +104,25 @@ const PostCard = ({ post }: { post: Posts }) => {
 };
 
 const PostFeed = () => {
-  const { data } = api.post.all.useQuery();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const { data, mutate: search } = api.post.filtered.useMutation();
+
+  useEffect(() => {
+    if (searchTerm.length > 0) {
+      search({ searchTerm });
+    }
+    console.log('data', data);
+  }, [searchTerm]);
+
+  // if (typeof data === 'undefined') return null;
 
   return (
     <Flex direction='column' h='75vh' w='100%' justify='center' align='center'>
       <Flex direction='row' w='100%'>
         <InputGroup size='lg'>
           <InputLeftElement pointerEvents='none' children={<SearchIcon color='gray.300' />} />
-          <Input type='tel' placeholder='Flightplan search ...' />
+          <Input type='tel' placeholder='Flightplan search ...' onChange={(e) => setSearchTerm(e.target.value)} />
         </InputGroup>
       </Flex>
       <Virtuoso

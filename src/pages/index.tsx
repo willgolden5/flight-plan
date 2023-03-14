@@ -119,13 +119,13 @@ const Home: NextPage = () => {
       </Layout>
     );
   }
-  if (data && !data.user.isPilot) {
-    return (
-      <Layout>
-        <AirmenAuthForm />
-      </Layout>
-    );
-  }
+  // if (data && !data.user.isPilot) {
+  //   return (
+  //     <Layout>
+  //       <AirmenAuthForm />
+  //     </Layout>
+  //   );
+  // }
 
   return (
     <Flex w='100%'>
