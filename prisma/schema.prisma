@@ -20,20 +20,43 @@ model Alpha {
   last  String
 }
 
-model Posts {
-  id             String   @id @default(cuid())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  authorId       String
-  certificate    String[] @default([])
-  ratings        String[] @default([])
-  status         String
-  access         Boolean  @default(false)
-  avionics       String
-  category       Boolean  @default(false)
-  class          String
-  flightLocation String
-  author         User     @relation(fields: [authorId], references: [id])
+// model Posts {
+//   id             String   @id @default(cuid())
+//   createdAt      DateTime @default(now())
+//   updatedAt      DateTime @updatedAt
+//   authorId       String
+//   certificate    String[] @default([])
+//   ratings        String[] @default([])
+//   status         String
+//   access         Boolean  @default(false)
+//   avionics       String
+//   category       Boolean  @default(false)
+//   class          String
+//   flightLocation String
+//   author         User     @relation(fields: [authorId], references: [id])
+// }
+
+model FlightPlanMetadata {
+  id           String      @id @default(cuid())
+  takeOffTime  DateTime
+  landingTime  DateTime
+  hours        String
+  price        String
+  FlightPlan   FlightPlan?
+}
+
+model FlightPlan {
+  id         String             @id @default(cuid())
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+  authorId   String
+  metadataId String             @unique
+  access     Boolean            @default(false)
+  avionics   String
+  category   String             @default("airplane")
+  class      String
+  metadata   FlightPlanMetadata @relation(fields: [metadataId], references: [id])
+  author     User               @relation(fields: [authorId], references: [id])
 }
 
 model PilotCredentials {
@@ -73,13 +96,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String       @unique
+  phone         String
   emailVerified DateTime?
   image         String?
   accounts      Account[]
-  Posts         Posts[]
+  Posts         FlightPlan[]
   sessions      Session[]
 }
 

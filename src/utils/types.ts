@@ -38,3 +38,9 @@ export interface PlanAircraft {
     class: AircraftClass;
 }
 
+export interface FlightPlan {
+    metadata: PlanMetadata;
+    author: PlanAuthor;
+    aircraft: PlanAircraft;
+}
+
